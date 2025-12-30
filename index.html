@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mat Overseas - Premium Hardware & Modular Kitchen Solutions</title>
+    <meta name="description" content="Transforming spaces with exquisite hardware and modular kitchen solutions. Experience luxury redefined in every detail.">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Mat Overseas - Premium Hardware Solutions">
+    <meta property="og:description" content="Transforming spaces with exquisite hardware and modular kitchen solutions">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="logo-loader">
+                <div class="loader-circle"></div>
+                <span class="loader-text">MAT</span>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-text">
+                    <span class="logo-main">MAT</span>
+                    <span class="logo-sub">OVERSEAS</span>
+                </div>
+                <div class="logo-accent"></div>
+            </div>
+
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active" data-section="home">Home</a>
+                <a href="#products" class="nav-link" data-section="products">Products</a>
+                <a href="#about" class="nav-link" data-section="about">About</a>
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+            </div>
+
+            <div class="nav-toggle" id="navToggle">
+                <span class="toggle-line"></span>
+                <span class="toggle-line"></span>
+                <span class="toggle-line"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-background">
+                <div class="gradient-orb orb-1"></div>
+                <div class="gradient-orb orb-2"></div>
+                <div class="gradient-orb orb-3"></div>
+                <div class="animated-grid"></div>
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="title-line">MAT OVERSEAS</span>
+                        <span class="title-subtitle">Precision in Every Detail</span>
+                    </h1>
+                    <p class="hero-description">
+                        Elevating spaces with exquisite hardware and modular kitchen solutions.
+                        Where craftsmanship meets innovation in perfect harmony.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#products" class="btn-primary">
+                            <span class="btn-text">Explore Collection</span>
+                            <div class="btn-glow"></div>
+                        </a>
+                        <a href="#contact" class="btn-secondary">
+                            <span class="btn-text">Get in Touch</span>
+                            <div class="btn-border"></div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="floating-elements">
+                        <div class="floating-card card-1">
+                            <div class="card-icon">🔧</div>
+                            <span>Premium Hardware</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <div class="card-icon">🏠</div>
+                            <span>Modular Solutions</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <div class="card-icon">✨</div>
+                            <span>Expert Design</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">
+                <div class="scroll-text">Scroll to explore</div>
+                <div class="scroll-arrow"></div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="products">
+            <div class="section-background">
+                <div class="pattern-overlay"></div>
+            </div>
+
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Premium Collection</h2>
+                    <p class="section-subtitle">
+                        Discover our curated selection of hardware and modular solutions
+                        designed to transform your living spaces
+                    </p>
+                </div>
+
+                <div class="products-filter">
+                    <button class="filter-btn active" data-filter="all">All Products</button>
+                    <button class="filter-btn" data-filter="hardware">Hardware</button>
+                    <button class="filter-btn" data-filter="kitchen">Kitchen Solutions</button>
+                    <button class="filter-btn" data-filter="accessories">Accessories</button>
+                </div>
+
+                <div class="products-grid">
+                    <!-- Product cards will be dynamically generated -->
+                </div>
+
+                <div class="products-cta">
+                    <a href="#contact" class="btn-primary">
+                        <span class="btn-text">Request Full Catalogue</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="about-title">Crafting Excellence Since 2020</h2>
+                        <p class="about-description">
+                            At Mat Overseas, we are passionate about transforming ordinary spaces
+                            into extraordinary experiences. Our commitment to quality and innovation
+                            has made us a trusted name in premium hardware and modular solutions.
+                        </p>
+
+                        <div class="about-stats">
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="500">0</div>
+                                <div class="stat-label">Happy Clients</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="1000">0</div>
+                                <div class="stat-label">Products Delivered</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="4">0</div>
+                                <div class="stat-label">Years Experience</div>
+                            </div>
+                        </div>
+
+                        <div class="about-values">
+                            <div class="value-item">
+                                <div class="value-icon">💎</div>
+                                <h3>Premium Quality</h3>
+                                <p>Only the finest materials and craftsmanship in every product</p>
+                            </div>
+                            <div class="value-item">
+                                <div class="value-icon">🎯</div>
+                                <h3>Innovation</h3>
+                                <p>Cutting-edge designs that meet modern architectural demands</p>
+                            </div>
+                            <div class="value-item">
+                                <div class="value-icon">🤝</div>
+                                <h3>Customer Service</h3>
+                                <p>Dedicated support from consultation to installation</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-visual">
+                        <div class="about-image">
+                            <div class="image-placeholder">
+                                <div class="placeholder-icon">🏢</div>
+                                <span>Our Headquarters</span>
+                            </div>
+                        </div>
+                        <div class="floating-shapes">
+                            <div class="shape shape-1"></div>
+                            <div class="shape shape-2"></div>
+                            <div class="shape shape-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="section-background">
+                <div class="contact-pattern"></div>
+            </div>
+
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <p class="section-subtitle">
+                        Ready to transform your space? Let's discuss your requirements
+                        and create something extraordinary together
+                    </p>
+                </div>
+
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="info-card">
+                            <div class="info-icon">📧</div>
+                            <h3>Email Us</h3>
+                            <a href="mailto:info@matoverseas.com">info@matoverseas.com</a>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">📞</div>
+                            <h3>Call Us</h3>
+                            <a href="tel:+919876543210">+91 98765 43210</a>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">📍</div>
+                            <h3>Visit Us</h3>
+                            <p>Mumbai, Maharashtra<br>India 400001</p>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">🕐</div>
+                            <h3>Business Hours</h3>
+                            <p>Mon - Sat: 9:00 AM - 7:00 PM<br>Sunday: Closed</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                            <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+                            <input type="hidden" name="subject" value="New Enquiry from Mat Overseas Website">
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="name" name="name" required>
+                                    <label for="name">Your Name *</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" id="email" name="email" required>
+                                    <label for="email">Email Address *</label>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="tel" id="phone" name="phone" required>
+                                    <label for="phone">Phone Number *</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="company" name="company">
+                                    <label for="company">Company Name</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <select id="service" name="service" required>
+                                    <option value="">Select a Service</option>
+                                    <option value="kitchen-hardware">Kitchen Hardware</option>
+                                    <option value="modular-solutions">Modular Solutions</option>
+                                    <option value="cabinet-fittings">Cabinet Fittings</option>
+                                    <option value="consultation">Design Consultation</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <label for="service">Service Interested In *</label>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                                <label for="message">Your Message *</label>
+                            </div>
+
+                            <button type="submit" class="btn-primary btn-full">
+                                <span class="btn-text">Send Message</span>
+                                <div class="btn-glow"></div>
+                            </button>
+                        </form>
+
+                        <div class="form-success" id="formSuccess" style="display: none;">
+                            <div class="success-icon">✨</div>
+                            <h3>Thank You!</h3>
+                            <p>Your message has been sent successfully. We'll get back to you soon.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-main">MAT</span>
+                        <span class="logo-sub">OVERSEAS</span>
+                    </div>
+                    <p>Premium hardware and modular kitchen solutions transforming spaces since 2020.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <span class="social-icon">📘</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <span class="social-icon">📷</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <span class="social-icon">💼</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Quick Links</h4>
+                        <a href="#home">Home</a>
+                        <a href="#products">Products</a>
+                        <a href="#about">About Us</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="#">Kitchen Hardware</a>
+                        <a href="#">Modular Solutions</a>
+                        <a href="#">Cabinet Fittings</a>
+                        <a href="#">Design Consultation</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Contact Info</h4>
+                        <a href="mailto:info@matoverseas.com">info@matoverseas.com</a>
+                        <a href="tel:+919876543210">+91 98765 43210</a>
+                        <p>Mumbai, Maharashtra</p>
+                        <p>India 400001</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mat Overseas. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+</body>
+</html>
