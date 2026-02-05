@@ -726,11 +726,10 @@ function initMagneticEffects() {
 
 // ===== REVEAL ANIMATIONS =====
 function initRevealAnimations() {
-    const revealElements = document.querySelectorAll('.value-item, .info-card, .about-image');
-
-    revealElements.forEach((element, index) => {
+    // General reveal elements (keep delay for staggered effect if needed)
+    const generalReveals = document.querySelectorAll('.value-item, .about-image');
+    generalReveals.forEach((element, index) => {
         gsap.set(element, { opacity: 0, y: 50 });
-
         ScrollTrigger.create({
             trigger: element,
             start: 'top 85%',
@@ -741,6 +740,25 @@ function initRevealAnimations() {
                     duration: 0.8,
                     delay: index * 0.1,
                     ease: 'power3.out'
+                });
+            }
+        });
+    });
+
+    // Contact cards specific animation
+    const contactCards = document.querySelectorAll('.info-card');
+    contactCards.forEach((element, index) => {
+        gsap.set(element, { opacity: 0, y: 30 });
+        ScrollTrigger.create({
+            trigger: element,
+            start: 'top bottom', // Trigger as soon as the top of element hits bottom of viewport
+            onEnter: () => {
+                gsap.to(element, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    delay: 0, // No delay for immediate feedback
+                    ease: 'power2.out'
                 });
             }
         });
