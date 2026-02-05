@@ -37,6 +37,8 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll causing swaying */
 }
 
 body {
@@ -44,6 +46,9 @@ body {
     background: var(--primary-dark);
     color: var(--text-primary);
     overflow-x: hidden;
+    /* Double protection */
+    width: 100%;
+    position: relative;
     line-height: 1.6;
     cursor: none !important;
     /* Hide default cursor forcefully */
@@ -317,7 +322,8 @@ select,
     flex-direction: column;
     gap: 4px;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 10002;
+    /* Higher than nav-menu (10001) */
 }
 
 .toggle-line {
@@ -1444,7 +1450,8 @@ select,
 
 @media (max-width: 768px) {
     :root {
-        --container-padding: 1.5rem;
+        --container-padding: 1.25rem;
+        /* Slightly reduced */
         --section-gap: 4rem;
     }
 
@@ -1460,8 +1467,10 @@ select,
         flex-direction: column;
         justify-content: center;
         gap: 2rem;
+        gap: 2rem;
         transition: right 0.3s ease;
-        z-index: 999;
+        z-index: 10001;
+        /* Ensure it's above everything including loading screen leftovers if any */
     }
 
     .nav-menu.active {
@@ -1535,11 +1544,37 @@ select,
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        /* Reduced from 2.5rem for better fit */
+    }
+
+    .hero {
+        padding-bottom: 5rem;
+        /* Make room for scroll indicator */
+        align-items: center;
+        /* Ensure vertical centering respects padding */
+    }
+
+    /* Scroll Indicator Adjustment for Mobile */
+    .scroll-indicator {
+        bottom: 20px;
+        transform: translateX(-50%) scale(0.8);
+    }
+
+    .scroll-text {
+        font-size: 0.7rem;
+        /* smaller text */
+        display: none;
+        /* Hide text if it causes too much clutter, or keep it small. Let's keep it small but hide if needed. */
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 1.75rem;
+        /* Reduced from 2rem */
+    }
+
+    .hero-description {
+        font-size: 1rem;
     }
 
     .products-grid {
@@ -1547,11 +1582,17 @@ select,
     }
 
     .contact-form {
-        padding: 2rem;
+        padding: 1.5rem;
+        /* Reduced padding */
     }
 
     .form-success {
-        padding: 2rem;
+        padding: 1.5rem;
+    }
+
+    /* Adjust floating card margins to prevent overlap/crowding */
+    .floating-card {
+        margin-bottom: 0.5rem;
     }
 }
 
