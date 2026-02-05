@@ -1,7 +1,7 @@
 // ===== MAT OVERSEAS WEBSITE JAVASCRIPT =====
 
 // Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeWebsite();
 });
 
@@ -56,12 +56,27 @@ function initCustomCursor() {
 
     // Check if device supports hover (not mobile)
     if (window.matchMedia('(hover: hover)').matches) {
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+        // Initial set
+        gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+        gsap.set(cursorFollower, { xPercent: -50, yPercent: -50 });
 
-            cursorFollower.style.left = e.clientX + 'px';
-            cursorFollower.style.top = e.clientY + 'px';
+        // Mouse move listener
+        window.addEventListener('mousemove', (e) => {
+            // Direct movement for the dot (instant)
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1, // Slight smoothing
+                ease: "power2.out"
+            });
+
+            // Delayed movement for the follower
+            gsap.to(cursorFollower, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.5,
+                ease: "power2.out"
+            });
         });
 
         // Add hover effect to interactive elements
@@ -84,6 +99,8 @@ function initCustomCursor() {
         // Hide cursor on mobile devices
         cursor.style.display = 'none';
         cursorFollower.style.display = 'none';
+        // Revert body cursor on mobile
+        document.body.style.cursor = 'auto';
     }
 }
 
@@ -120,7 +137,7 @@ function initNavigation() {
                     top: 0,
                     behavior: 'smooth'
                 });
-                
+
                 // Update active state
                 navLinks.forEach(l => l.classList.remove('active'));
                 const homeLink = document.querySelector('a[href="#home"]');
@@ -138,7 +155,7 @@ function initNavigation() {
             const targetId = link.getAttribute('href');
             if (targetId.startsWith('#') && targetId !== '#') {
                 e.preventDefault();
-                
+
                 // Close mobile menu
                 navToggle.classList.remove('active');
                 navMenu.classList.remove('active');
@@ -152,7 +169,7 @@ function initNavigation() {
                 const targetSection = document.querySelector(targetId);
                 if (targetSection) {
                     const offsetTop = targetSection.offsetTop - 80;
-                    
+
                     // Use native smooth scrolling (works in all modern browsers)
                     window.scrollTo({
                         top: offsetTop,
@@ -417,7 +434,7 @@ function initContactForm() {
         }
 
         // Update label on change
-        serviceSelect.addEventListener('change', function() {
+        serviceSelect.addEventListener('change', function () {
             if (selectLabel) {
                 selectLabel.style.top = '-0.5rem';
                 selectLabel.style.left = '0.5rem';
@@ -649,7 +666,7 @@ function initCounters() {
                     duration: 2,
                     ease: 'power2.out',
                     snap: { textContent: 1 },
-                    onUpdate: function() {
+                    onUpdate: function () {
                         counter.textContent = Math.ceil(this.targets()[0].textContent);
                     }
                 });

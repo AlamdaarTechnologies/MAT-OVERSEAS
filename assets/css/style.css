@@ -45,6 +45,18 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     line-height: 1.6;
+    cursor: none !important;
+    /* Hide default cursor forcefully */
+}
+
+a,
+button,
+input,
+textarea,
+select,
+.floating-card {
+    cursor: none !important;
+    /* Ensure interactive elements also hide cursor */
 }
 
 /* ===== LOADING SCREEN ===== */
@@ -131,19 +143,31 @@ body {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes loading {
-    0% { width: 0; }
-    100% { width: 100%; }
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
 }
 
 /* ===== CUSTOM CURSOR ===== */
 .custom-cursor,
 .cursor-follower {
     position: fixed;
+    top: 0;
+    left: 0;
     pointer-events: none;
     z-index: 9999;
     mix-blend-mode: difference;
@@ -155,7 +179,8 @@ body {
     background: var(--accent-gold);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
+    transform: translate(-50%, -50%);
+    /* Transition removed - handled by GSAP */
 }
 
 .cursor-follower {
@@ -163,8 +188,9 @@ body {
     height: 40px;
     border: 2px solid rgba(212, 175, 55, 0.3);
     border-radius: 50%;
+    border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: all 0.3s ease;
+    /* Transition removed - handled by GSAP */
 }
 
 .custom-cursor.hover {
@@ -386,13 +412,25 @@ body {
 }
 
 @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(30px, -30px) scale(1.1); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
 }
 
 @keyframes gridMove {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(50px, 50px); }
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(50px, 50px);
+    }
 }
 
 .hero-content {
@@ -509,9 +547,19 @@ body {
 }
 
 @keyframes cardFloat {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    25% { transform: translateY(-20px) rotate(2deg); }
-    75% { transform: translateY(-10px) rotate(-2deg); }
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-20px) rotate(2deg);
+    }
+
+    75% {
+        transform: translateY(-10px) rotate(-2deg);
+    }
 }
 
 /* ===== BUTTONS ===== */
@@ -1008,8 +1056,15 @@ body {
 }
 
 @keyframes shapeFloat {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(20px, -15px) rotate(180deg); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(20px, -15px) rotate(180deg);
+    }
 }
 
 /* ===== CONTACT SECTION ===== */
@@ -1142,12 +1197,12 @@ body {
     transition: all 0.3s ease;
 }
 
-.form-group input:focus + label,
-.form-group textarea:focus + label,
-.form-group select:focus + label,
-.form-group input:not(:placeholder-shown) + label,
-.form-group textarea:not(:placeholder-shown) + label,
-.form-group select + label {
+.form-group input:focus+label,
+.form-group textarea:focus+label,
+.form-group select:focus+label,
+.form-group input:not(:placeholder-shown)+label,
+.form-group textarea:not(:placeholder-shown)+label,
+.form-group select+label {
     top: -0.5rem;
     left: 0.5rem;
     font-size: 0.8rem;
@@ -1335,6 +1390,7 @@ body {
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1200px) {
+
     .hero-content,
     .about-content,
     .contact-content {
@@ -1517,7 +1573,6 @@ body {
 .btn-primary:focus,
 .btn-secondary:focus,
 .filter-btn:focus,
-.nav-link:focus,
 input:focus,
 textarea:focus,
 select:focus {
@@ -1525,8 +1580,13 @@ select:focus {
     outline-offset: 2px;
 }
 
+.nav-link:focus {
+    outline: none;
+}
+
 /* ===== PRINT STYLES ===== */
 @media print {
+
     .navbar,
     .hero-visual,
     .floating-elements,
