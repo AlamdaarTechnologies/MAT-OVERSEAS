@@ -19,7 +19,9 @@ function initializeWebsite() {
     initCounters();
     initParallax();
     initMagneticEffects();
+    initMagneticEffects();
     initRevealAnimations();
+    initProductModal();
 
     console.log('Mat Overseas website initialized successfully! 🚀');
 }
@@ -50,58 +52,74 @@ function initLoadingScreen() {
 }
 
 // ===== CUSTOM CURSOR =====
+// ===== CUSTOM CURSOR =====
 function initCustomCursor() {
     const cursor = document.getElementById('cursor');
     const cursorFollower = document.getElementById('cursorFollower');
 
-    // Check if device supports hover (not mobile)
-    if (window.matchMedia('(hover: hover)').matches) {
-        // Initial set
-        gsap.set(cursor, { xPercent: -50, yPercent: -50 });
-        gsap.set(cursorFollower, { xPercent: -50, yPercent: -50 });
-
-        // Mouse move listener
-        window.addEventListener('mousemove', (e) => {
-            // Direct movement for the dot (instant)
-            gsap.to(cursor, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.1, // Slight smoothing
-                ease: "power2.out"
-            });
-
-            // Delayed movement for the follower
-            gsap.to(cursorFollower, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.5,
-                ease: "power2.out"
-            });
-        });
-
-        // Add hover effect to interactive elements
-        const interactiveElements = 'a, button, .product-card, .floating-card, .filter-btn, .nav-link, .info-card, .value-item, .social-link';
-
-        document.addEventListener('mouseover', (e) => {
-            if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
-                cursor.classList.add('hover');
-                cursorFollower.classList.add('hover');
-            }
-        });
-
-        document.addEventListener('mouseout', (e) => {
-            if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
-                cursor.classList.remove('hover');
-                cursorFollower.classList.remove('hover');
-            }
-        });
-    } else {
-        // Hide cursor on mobile devices
-        cursor.style.display = 'none';
-        cursorFollower.style.display = 'none';
-        // Revert body cursor on mobile
-        document.body.style.cursor = 'auto';
+    // Function to handle cursor state
+    function handleCursorVisibility(e) {
+        if (e.matches) {
+            // Hover supported (Desktop)
+            cursor.style.display = 'block';
+            cursorFollower.style.display = 'block';
+            document.body.style.cursor = 'none'; // Force hide default cursor
+        } else {
+            // No hover (Mobile/Touch)
+            cursor.style.display = 'none';
+            cursorFollower.style.display = 'none';
+            document.body.style.cursor = 'auto'; // Show default cursor
+        }
     }
+
+    // Media query for hover capability
+    const hoverQuery = window.matchMedia('(hover: hover)');
+
+    // Initial check
+    handleCursorVisibility(hoverQuery);
+
+    // Listen for changes
+    hoverQuery.addEventListener('change', handleCursorVisibility);
+
+    // Initial positioning
+    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+    gsap.set(cursorFollower, { xPercent: -50, yPercent: -50 });
+
+    // Mouse move listener (always active but elements might be hidden)
+    window.addEventListener('mousemove', (e) => {
+        // Direct movement for the dot (instant)
+        gsap.to(cursor, {
+            x: e.clientX,
+            y: e.clientY,
+            duration: 0.1,
+            ease: "power2.out"
+        });
+
+        // Delayed movement for the follower
+        gsap.to(cursorFollower, {
+            x: e.clientX,
+            y: e.clientY,
+            duration: 0.5,
+            ease: "power2.out"
+        });
+    });
+
+    // Add hover effect to interactive elements
+    const interactiveElements = 'a, button, .product-card, .floating-card, .filter-btn, .nav-link, .info-card, .value-item, .social-link';
+
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
+            cursor.classList.add('hover');
+            cursorFollower.classList.add('hover');
+        }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.matches(interactiveElements) || e.target.closest(interactiveElements)) {
+            cursor.classList.remove('hover');
+            cursorFollower.classList.remove('hover');
+        }
+    });
 }
 
 // ===== NAVIGATION =====
@@ -237,84 +255,115 @@ function initProductData() {
     const products = [
         {
             id: 1,
-            name: 'Premium Modular Kitchen Handles',
-            category: 'hardware',
-            categoryName: 'Hardware',
-            description: 'Ergonomically designed handles with premium finish for modern kitchens.',
-            features: ['Stainless Steel', 'Various Finishes', 'Durable Coating'],
-            icon: '🔧'
+            name: 'Slim Tandem Drawer',
+            category: 'kitchen',
+            categoryName: 'Kitchen Solutions',
+            description: 'Sleek and maximizing storage efficiency.',
+            features: ['Soft Close', 'Heavy Duty', 'Slim Design'],
+            image: 'assets/images/products/Slim Tandem Box.png',
+            specifications: {
+                'Material': 'Steel/Aluminum',
+                'Finish': 'Grey/Anthracite',
+                'Load Capacity': '40kg - 60kg',
+                'Extension': 'Full Extension',
+                'Closing': 'Soft-Close Mechanism'
+            }
         },
         {
             id: 2,
-            name: 'Soft-Close Drawer Slides',
+            name: 'S Corner',
             category: 'kitchen',
             categoryName: 'Kitchen Solutions',
-            description: 'High-quality drawer slides with smooth soft-close mechanism.',
-            features: ['100kg Capacity', 'Soft Close', 'Easy Installation'],
-            icon: '📦'
+            description: 'Innovative S-shaped corner storage unit.',
+            features: ['Space Maximizer', 'Smooth Gliding', 'Easy Access'],
+            image: 'assets/images/products/S-corner.jpg',
+            specifications: {
+                'Cabinet Size': '900mm - 1000mm',
+                'Trays': '2 Swing-Out Trays',
+                'Load per Tray': '20kg',
+                'Finish': 'Chrome/Grey',
+                'Installation': 'Universal (Left/Right)'
+            }
         },
         {
             id: 3,
-            name: 'Cabinet Hinges System',
-            category: 'accessories',
-            categoryName: 'Accessories',
-            description: 'Adjustable cabinet hinges for perfect door alignment.',
-            features: ['360° Adjustment', 'Corrosion Resistant', 'Heavy Duty'],
-            icon: '🔗'
+            name: 'Universal Magic Corner',
+            category: 'kitchen',
+            categoryName: 'Kitchen Solutions',
+            description: 'The ultimate blind corner solution.',
+            features: ['Universal Fit', '4 Basket System', 'Soft Stop'],
+            image: 'assets/images/products/Universal magic corner.jpg',
+            specifications: {
+                'Cabinet Width': '900mm - 1200mm',
+                'Door Width': '450mm Min',
+                'Structure': 'High-strength Steel',
+                'Baskets': 'Anti-slip Base',
+                'Operation': 'Pull-out & Swing'
+            }
         },
         {
             id: 4,
-            name: 'Pull-Out Kitchen Organizer',
+            name: 'SS Pantry Unit',
             category: 'kitchen',
             categoryName: 'Kitchen Solutions',
-            description: 'Intelligent storage solution for modern kitchens.',
-            features: ['Space Efficient', 'Smooth Operation', 'Easy Assembly'],
-            icon: '🏪'
+            description: 'Tall unit storage for organized pantry.',
+            features: ['Adjustable Baskets', 'Heavy Load', 'Full View'],
+            image: 'assets/images/products/Pantry unit.jpg',
+            specifications: {
+                'Height': '1600mm - 2100mm (Adjustable)',
+                'Width': '450mm / 600mm',
+                'Layers': '6 Basket Layers',
+                'Material': 'Stainless Steel 304',
+                'Slides': 'Top & Bottom Running'
+            }
         },
         {
             id: 5,
-            name: 'Kitchen Sink Mixer Tap',
-            category: 'hardware',
-            categoryName: 'Hardware',
-            description: 'Modern sink mixer tap with pull-out spray head.',
-            features: ['Pull-out Spray', 'Single Lever', '360° Swivel'],
-            icon: '🚿'
+            name: 'Bottle Pull Out',
+            category: 'kitchen',
+            categoryName: 'Kitchen Solutions',
+            description: 'Convenient storage for bottles and jars.',
+            features: ['Divider System', 'Stable Motion', 'Compact'],
+            image: 'assets/images/products/Bottle pull out.jpg',
+            specifications: {
+                'Cabinet Width': '150mm - 300mm',
+                'Runners': 'Soft Close Undermount',
+                'Material': 'Chrome Plated / SS',
+                'Features': 'Removable Dividers',
+                'Mounting': 'Side / Bottom'
+            }
         },
         {
             id: 6,
-            name: 'Undermount Drawer System',
-            category: 'accessories',
-            categoryName: 'Accessories',
-            description: 'Premium undermount drawer system for clean aesthetics.',
-            features: ['Silent Operation', 'Easy Installation', 'Heavy Duty'],
-            icon: '🗄️'
+            name: 'Elevator Basket',
+            category: 'kitchen',
+            categoryName: 'Kitchen Solutions',
+            description: 'Pull-down system for high wall cabinets.',
+            features: ['Ergonomic', 'Easy Lift', 'Adjustable Tension'],
+            image: 'assets/images/products/Elevator basket.jpg',
+            specifications: {
+                'Cabinet Width': '600mm - 900mm',
+                'Load Capacity': '10kg - 15kg',
+                'Mechanism': 'Hydraulic Assist',
+                'Shelves': '2 Tier System',
+                'Handle': 'Soft Grip'
+            }
         },
         {
             id: 7,
-            name: 'Blumotion Hinges',
+            name: 'SS Waste Bin',
             category: 'accessories',
             categoryName: 'Accessories',
-            description: 'Soft-close cabinet hinges with integrated damping.',
-            features: ['Soft Close', 'Self-Closing', 'Adjustable'],
-            icon: '🚪'
-        },
-        {
-            id: 8,
-            name: 'Corner Kitchen Organizer',
-            category: 'kitchen',
-            categoryName: 'Kitchen Solutions',
-            description: 'Smart corner storage solution that maximizes space.',
-            features: ['360° Rotation', 'Space Maximizing', 'Smooth Operation'],
-            icon: '🔄'
-        },
-        {
-            id: 9,
-            name: 'Bar Handles Collection',
-            category: 'hardware',
-            categoryName: 'Hardware',
-            description: 'Contemporary bar handles in various lengths and finishes.',
-            features: ['Modern Design', 'Various Lengths', 'Premium Finish'],
-            icon: '📏'
+            description: 'Hygienic and concealed waste management.',
+            features: ['Odor Seal', 'Easy Clean', 'Auto Lid'],
+            image: 'assets/images/products/SS Waste bin.jpg',
+            specifications: {
+                'Capacity': '15L / 30L',
+                'Material': 'Stainless Steel + Plastic',
+                'Mounting': 'Door / Floor',
+                'Lid': 'Automatic Opening',
+                'Bin': 'Removable Inner Bucket'
+            }
         }
     ];
 
@@ -322,58 +371,158 @@ function initProductData() {
     window.allProducts = products;
 }
 
-// ===== RENDER PRODUCTS =====
-function renderProducts(products) {
-    const productsGrid = document.querySelector('.products-grid');
+// Global variable to hold the Swiper instance
+let productSwiperInstance = null;
 
-    if (!productsGrid) return;
+// Render functions
+function renderProducts(products) {
+    const productsWrapper = document.getElementById('productsWrapper');
+
+    if (!productsWrapper) {
+        console.error("Element with ID 'productsWrapper' not found.");
+        return;
+    }
+
+    // Clear existing content
+    productsWrapper.innerHTML = '';
 
     if (products.length === 0) {
-        productsGrid.innerHTML = `
-            <div class="no-products">
+        productsWrapper.innerHTML = `
+            <div class="no-products" style="text-align: center; padding: 2rem;">
                 <h3>No products found</h3>
                 <p>Try adjusting your filters</p>
             </div>
         `;
+        // Destroy Swiper if no products
+        if (productSwiperInstance) {
+            productSwiperInstance.destroy(true, true);
+            productSwiperInstance = null;
+        }
         return;
     }
 
-    productsGrid.innerHTML = products.map(product => `
-        <div class="product-card" data-category="${product.category}">
-            <div class="product-image">
-                <div class="product-placeholder">
-                    <div class="placeholder-icon">${product.icon}</div>
-                </div>
+    // Create Slides
+    // Duplicate products to ensure seamless loop with coverflow
+    const loopProducts = [...products, ...products, ...products];
+
+    productsWrapper.innerHTML = loopProducts.map(product => `
+        <div class="swiper-slide">
+            <div class="product-image" style="background: transparent; height: 60%; padding: 1rem;">
+                <img src="${product.image}" alt="${product.name}" style="height: 100%; object-fit: contain; width: 100%; border-radius: 10px;">
             </div>
-            <div class="product-content">
-                <span class="product-category">${product.categoryName}</span>
-                <h3 class="product-title">${product.name}</h3>
-                <p class="product-description">${product.description}</p>
-                <div class="product-features">
-                    ${product.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+            <div class="product-content" style="padding: 1.5rem; flex: 1; display: flex; flex-direction: column;">
+                <span class="product-category" style="align-self: flex-start; margin-bottom: 0.5rem;">${product.categoryName}</span>
+                <h3 class="product-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">${product.name}</h3>
+                <p class="product-description" style="font-size: 0.9rem; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${product.description}</p>
+                <div style="margin-top: auto;">
+                    <button onclick="openProductModal(${product.id})" class="product-link">View Details</button>
                 </div>
-                <a href="#contact" class="product-link">Enquire Now</a>
             </div>
         </div>
     `).join('');
 
-    // Add animation to product cards
-    gsap.fromTo('.product-card',
-        { opacity: 0, y: 30, scale: 0.9 },
-        {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'back.out(1.7)',
-            scrollTrigger: {
-                trigger: '.products-grid',
-                start: 'top 85%',
-                once: true
+    // Initialize Swiper
+    initSwiper();
+}
+
+function initSwiper() {
+    // Destroy existing Swiper instance if it exists
+    if (productSwiperInstance) {
+        productSwiperInstance.destroy(true, true);
+    }
+
+    productSwiperInstance = new Swiper('.product-swiper', {
+        effect: 'coverflow',
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflowEffect: {
+            rotate: 30,
+            stretch: 0,
+            depth: 80,
+            modifier: 1,
+            slideShadows: true,
+        },
+        loop: true,
+        loopedSlides: 6,
+        pagination: false, // Disable default pagination to use custom logic
+        on: {
+            init: function () {
+                initCustomPagination(this);
+            },
+            slideChange: function () {
+                updateCustomPagination(this);
             }
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        initialSlide: 1, // Start with the second product focused
+        // Removed duplicate loop: true to avoid conflicts, it's set above with loopedSlides
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
         }
-    );
+    });
+}
+
+// Custom Pagination Logic
+function initCustomPagination(swiper) {
+    const paginationEl = document.querySelector('.swiper-pagination');
+    if (!paginationEl) return;
+
+    // Clear existing
+    paginationEl.innerHTML = '';
+
+    // Create 7 dots only
+    const totalUnique = 7;
+    for (let i = 0; i < totalUnique; i++) {
+        const bullet = document.createElement('span');
+        bullet.className = 'swiper-pagination-bullet';
+        // Add click listener
+        bullet.addEventListener('click', () => {
+            const currentRealIndex = swiper.realIndex;
+            const targets = [i, i + 7, i + 14];
+
+            let bestTarget = targets[0];
+            let minDiff = Math.abs(currentRealIndex - bestTarget);
+
+            targets.forEach(t => {
+                const diff = Math.abs(currentRealIndex - t);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    bestTarget = t;
+                }
+            });
+
+            swiper.slideToLoop(bestTarget);
+        });
+        paginationEl.appendChild(bullet);
+    }
+
+    updateCustomPagination(swiper);
+}
+
+function updateCustomPagination(swiper) {
+    const paginationEl = document.querySelector('.swiper-pagination');
+    if (!paginationEl) return;
+
+    const totalUnique = 7;
+    const activeIndex = swiper.realIndex % totalUnique;
+
+    const bullets = paginationEl.querySelectorAll('.swiper-pagination-bullet');
+    bullets.forEach((bullet, idx) => {
+        if (idx === activeIndex) {
+            bullet.classList.add('swiper-pagination-bullet-active');
+            bullet.style.backgroundColor = 'var(--accent-gold)';
+            bullet.style.opacity = '1';
+        } else {
+            bullet.classList.remove('swiper-pagination-bullet-active');
+            bullet.style.backgroundColor = '';
+            bullet.style.opacity = '';
+        }
+    });
 }
 
 // ===== PRODUCT FILTERS =====
@@ -763,6 +912,97 @@ function initRevealAnimations() {
             }
         });
     });
+}
+
+// ===== PRODUCT MODAL =====
+function initProductModal() {
+    const modal = document.getElementById('productModal');
+    const closeBtn = document.getElementById('modalClose');
+    const overlay = document.getElementById('modalOverlay');
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeProductModal);
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', closeProductModal);
+    }
+
+    // Modal Enquire Button Logic
+    const enquireBtn = modal.querySelector('.modal-enquire-btn');
+    if (enquireBtn) {
+        enquireBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            closeProductModal();
+
+            // Wait for modal exit animation before scrolling
+            setTimeout(() => {
+                const contactSection = document.querySelector('#contact');
+                if (contactSection) {
+                    const offsetTop = contactSection.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 300);
+        });
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeProductModal();
+        }
+    });
+}
+
+function openProductModal(productId) {
+    const product = window.allProducts.find(p => p.id === productId);
+    if (!product) return;
+
+    const modal = document.getElementById('productModal');
+    const title = modal.querySelector('.modal-title');
+    const category = modal.querySelector('.modal-category');
+    const description = modal.querySelector('.modal-description');
+    const icon = modal.querySelector('.modal-icon');
+    const specsBody = document.getElementById('modalSpecsBody');
+
+    // Populate Data
+    title.textContent = product.name;
+    category.textContent = product.categoryName;
+    description.textContent = product.description;
+
+    // Inject Image instead of Icon
+    const imagePlaceholder = modal.querySelector('.modal-image-placeholder');
+    if (imagePlaceholder) {
+        // Clear previous content (icon or old image)
+        imagePlaceholder.innerHTML = `<img src="${product.image}" alt="${product.name}" class="modal-product-image">`;
+    }
+
+    // Populate Specifications
+    if (product.specifications) {
+        specsBody.innerHTML = Object.entries(product.specifications).map(([key, value]) => `
+            <tr>
+                <td class="specs-key">${key}</td>
+                <td class="specs-value">${value}</td>
+            </tr>
+        `).join('');
+    } else {
+        specsBody.innerHTML = '<tr><td colspan="2">No specifications available.</td></tr>';
+    }
+
+    // Show Modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+window.openProductModal = openProductModal; // Make global
+
+function closeProductModal() {
+    const modal = document.getElementById('productModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
 }
 
 // ===== UTILITY FUNCTIONS =====
