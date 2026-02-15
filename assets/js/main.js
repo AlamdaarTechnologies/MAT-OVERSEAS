@@ -13,7 +13,7 @@ function initializeWebsite() {
     initNavigation();
     initScrollEffects();
     initProductData();
-    initProductFilters();
+
     initContactForm();
     initAnimations();
     initCounters();
@@ -262,10 +262,10 @@ function initProductData() {
             features: ['Soft Close', 'Heavy Duty', 'Slim Design'],
             image: 'assets/images/products/Slim Tandem Box.png',
             specifications: {
-                'Material': 'Steel/Aluminum',
-                'Finish': 'Grey/Anthracite',
+                'Material': 'Steel Panel/Galvanized',
+                'Finish': 'Dark Grey Matt',
                 'Load Capacity': '40kg - 60kg',
-                'Extension': 'Full Extension',
+                'Extension': '20" , 22" Full Extension',
                 'Closing': 'Soft-Close Mechanism'
             }
         },
@@ -281,8 +281,8 @@ function initProductData() {
                 'Cabinet Size': '900mm - 1000mm',
                 'Trays': '2 Swing-Out Trays',
                 'Load per Tray': '20kg',
-                'Finish': 'Chrome/Grey',
-                'Installation': 'Universal (Left/Right)'
+                'Finish': 'Dark Grey',
+                'Installation': 'Left / Right'
             }
         },
         {
@@ -294,8 +294,8 @@ function initProductData() {
             features: ['Universal Fit', '4 Basket System', 'Soft Stop'],
             image: 'assets/images/products/Universal magic corner.jpg',
             specifications: {
-                'Cabinet Width': '900mm - 1200mm',
-                'Door Width': '450mm Min',
+                'Cabinet Width': '800mm - 900mm',
+                'Load Capacity': '5kg each basket',
                 'Structure': 'High-strength Steel',
                 'Baskets': 'Anti-slip Base',
                 'Operation': 'Pull-out & Swing'
@@ -310,8 +310,8 @@ function initProductData() {
             features: ['Adjustable Baskets', 'Heavy Load', 'Full View'],
             image: 'assets/images/products/Pantry unit.jpg',
             specifications: {
-                'Height': '1600mm - 2100mm (Adjustable)',
-                'Width': '450mm / 600mm',
+                'Height': '500mm x 1700mm',
+                'Width': '600mm',
                 'Layers': '6 Basket Layers',
                 'Material': 'Stainless Steel 304',
                 'Slides': 'Top & Bottom Running'
@@ -326,10 +326,10 @@ function initProductData() {
             features: ['Divider System', 'Stable Motion', 'Compact'],
             image: 'assets/images/products/Bottle pull out.jpg',
             specifications: {
-                'Cabinet Width': '150mm - 300mm',
+                'Cabinet Width': '200mm - 300mm',
                 'Runners': 'Soft Close Undermount',
-                'Material': 'Chrome Plated / SS',
-                'Features': 'Removable Dividers',
+                'Material': 'Stainless Steel',
+                'Color': 'Dark Grey',
                 'Mounting': 'Side / Bottom'
             }
         },
@@ -342,8 +342,8 @@ function initProductData() {
             features: ['Ergonomic', 'Easy Lift', 'Adjustable Tension'],
             image: 'assets/images/products/Elevator basket.jpg',
             specifications: {
-                'Cabinet Width': '600mm - 900mm',
-                'Load Capacity': '10kg - 15kg',
+                'Cabinet Width': '900mm',
+                'Load Capacity': '15kg - 20kg',
                 'Mechanism': 'Hydraulic Assist',
                 'Shelves': '2 Tier System',
                 'Handle': 'Soft Grip'
@@ -358,7 +358,7 @@ function initProductData() {
             features: ['Odor Seal', 'Easy Clean', 'Auto Lid'],
             image: 'assets/images/products/SS Waste bin.jpg',
             specifications: {
-                'Capacity': '15L / 30L',
+                'Capacity': '8L',
                 'Material': 'Stainless Steel + Plastic',
                 'Mounting': 'Door / Floor',
                 'Lid': 'Automatic Opening',
@@ -525,40 +525,7 @@ function updateCustomPagination(swiper) {
     });
 }
 
-// ===== PRODUCT FILTERS =====
-function initProductFilters() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const filter = button.getAttribute('data-filter');
-
-            // Update active button
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-
-            // Filter products
-            let filteredProducts = window.allProducts;
-
-            if (filter !== 'all') {
-                filteredProducts = window.allProducts.filter(product => product.category === filter);
-            }
-
-            // Re-render products with animation
-            const productsGrid = document.querySelector('.products-grid');
-
-            gsap.to('.product-card', {
-                opacity: 0,
-                y: 20,
-                duration: 0.3,
-                stagger: 0.05,
-                onComplete: () => {
-                    renderProducts(filteredProducts);
-                }
-            });
-        });
-    });
-}
 
 // ===== CONTACT FORM =====
 function initContactForm() {
@@ -648,18 +615,31 @@ function initContactForm() {
         submitButton.disabled = true;
 
         try {
-            // For demo purposes, we'll simulate a successful submission
-            // In production, replace with actual Web3Forms submission
-            await simulateFormSubmission(formObject);
+            // Send data to Web3Forms
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formObject)
+            });
 
-            // Show success message
-            formSuccess.style.display = 'block';
-            contactForm.reset();
+            const json = await response.json();
 
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                formSuccess.style.display = 'none';
-            }, 5000);
+            if (response.status === 200) {
+                // Show success message
+                formSuccess.style.display = 'block';
+                contactForm.reset();
+
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    formSuccess.style.display = 'none';
+                }, 5000);
+            } else {
+                console.error('Form submission error:', json);
+                showNotification(json.message || 'Failed to send message', 'error');
+            }
 
         } catch (error) {
             console.error('Form submission error:', error);
@@ -672,15 +652,7 @@ function initContactForm() {
     });
 }
 
-// ===== SIMULATE FORM SUBMISSION =====
-async function simulateFormSubmission(formData) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            console.log('Form submitted:', formData);
-            resolve({ success: true });
-        }, 2000);
-    });
-}
+
 
 // ===== SHOW NOTIFICATION =====
 function showNotification(message, type = 'info') {

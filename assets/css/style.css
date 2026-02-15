@@ -18,6 +18,8 @@
     --text-secondary: #a8b2d1;
     --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
+    --input-bg: #1a1f2e;
+    /* Solid color for inputs to match autofill */
 
     /* Typography */
     --font-display: 'Playfair Display', serif;
@@ -1003,6 +1005,15 @@ select,
     border-radius: 20px;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+    /* Use original gradient background */
+}
+
+.about-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .image-placeholder {
@@ -1180,14 +1191,13 @@ select,
 .form-group select {
     width: 100%;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--input-bg);
     border: 1px solid var(--glass-border);
     border-radius: 10px;
     color: var(--text-primary);
     font-family: var(--font-body);
     font-size: 1rem;
     transition: all 0.3s ease;
-    background: var(--glass-bg);
 }
 
 .form-group input:focus,
@@ -1624,6 +1634,20 @@ textarea:focus,
 select:focus {
     outline: 2px solid var(--accent-gold);
     outline-offset: 2px;
+}
+
+/* Fix for autofill white background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+select:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .nav-link:focus {
