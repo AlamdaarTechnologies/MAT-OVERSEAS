@@ -19,7 +19,6 @@ function initializeWebsite() {
     initCounters();
     initParallax();
     initMagneticEffects();
-    initMagneticEffects();
     initRevealAnimations();
     initProductModal();
 
